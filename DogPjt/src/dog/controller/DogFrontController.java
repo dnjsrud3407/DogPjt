@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import dog.action.Action;
 import dog.action.DogCartAddAction;
 import dog.action.DogCartListAction;
+import dog.action.DogCartQtyChangeAction;
+import dog.action.DogCartRemoveAction;
 import dog.action.DogRegistAction;
 import dog.action.DogViewAction;
 import dog.action.DogListAction;
@@ -70,6 +72,22 @@ public class DogFrontController extends HttpServlet{
 		} else if(command.equals("/DogCartList.dog")) {
 			// --- 장바구니 목록 DogCartListAction();
 			action = new DogCartListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/DogCartQtyChange.dog")) {
+			// --- 수량 변경 DogCartQtyChangeAction() 
+			action = new DogCartQtyChangeAction();
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/DogCartRemove.dog")) {
+			// --- 삭제하기 DogCartRemoveAction()
+			action = new DogCartRemoveAction();
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {

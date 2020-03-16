@@ -28,7 +28,7 @@ public class DogListAction implements Action {
 		if(cookieArray != null) {
 			for (Cookie cookie : cookieArray) {
 				if(cookie.getName().startsWith("today")) {
-					// 디코딩 후 cookie 값으로 넣기
+					// 디코딩 후 cookie 값으로 넣기 (사진파일명과 id값을 넣으면 링크걸기가 가능해진다!)
 					todayImageList.add(URLDecoder.decode(cookie.getValue(), "UTF-8"));
 //					System.out.println("디코딩 전 쿠키 : " + cookie.getValue());
 					// 디코딩 후 쿠키

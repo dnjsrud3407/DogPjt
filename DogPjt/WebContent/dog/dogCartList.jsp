@@ -24,7 +24,7 @@
 		background-color: lime;
 	}
 	.div_empty {
-		background-color:red;
+		background-color:orange;
 		text-align: center;
 	}
 	.td_command {
@@ -69,15 +69,32 @@
 	function qtyUp(id) {
 		// 수량 증가 버튼 클릭 시 해당 수량 값을 1 증가
 		var element = document.getElementById('qty'+id);
-		element.value = Number(element.value) + 1;	// 덧셈 연산자는 문자열 연뎔로 사용됨
+		if(element.value >= 99) {
+			element.value = 99;		// 최대 99
+		} else {
+			// 덧셈 연산자는 문자열 연결로 사용됨
+			element.value = Number(element.value) + 1;
+		}
 	}
 	function qtyDown(id) {
 		var element = document.getElementById('qty'+id);
-		if(element.value == 1) {
-			element.value = 1;			
+		if(element.value <= 1) {
+			element.value = 1;		// 최소 1	
 		} else {
 			element.value = element.value - 1;
 		}
+	}
+	function checkQty(qtyInput) {
+// 		alert(qty);
+		var qty = qtyInput.value;
+		if(!(qty >= 1 && qty <= 99)){
+			alert('수량을 1 ~ 99 사이의 값으로 입력하세요');
+			qtyInput.value = 1;
+		}
+	}
+	function qtyChange(cartId) {
+		var element = document.getElementById('qty'+cartId);
+		location.href ='DogCartQtyChange.dog?id=' + cartId + '&qty=' + element.value;
 	}
 </script>
 </head>
@@ -184,7 +201,7 @@
 	
 	<tr>
 		<td>
-			<input type="checkbox" id="remove" name="remove" value="${cart.kind }" />
+			<input type="checkbox" id="remove" name="remove" value="${cart.id }" />
 		</td>
 		<td>
  		${status.index+1 } <%-- 번호값계산 --%>
@@ -200,7 +217,8 @@
 		</td>
 		<td>
 		<a href="javascript:qtyUp(${cart.id })">▲</a><br>
-		<input type="text" name="qty" id="qty${cart.id }" size="1" value="${cart.qty }"><br>
+		<input type="text" name="qty" id="qty${cart.id }" size="1" value="${cart.qty }" onchange="javascript:checkQty(this)">
+		<input type="button" value="변경" onclick="qtyChange(${cart.id})"><br>
 		<a href="javascript:qtyDown(${cart.id })">▼</a>
 		</td>
 	</tr>
@@ -220,7 +238,7 @@
 	</c:if>
 	<c:if test="${cartList == null }">
 		<section class="div_empty">
-		개정보가 없습니다
+		장바구니가 비었습니다
 		</section>
 	</c:if>
 	<nav id="commandList">

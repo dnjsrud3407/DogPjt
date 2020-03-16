@@ -29,10 +29,12 @@ public class DogCartListAction implements Action {
 		int totalMoney = 0;
 		int money = 0;
 		
-		// 장바구니 항목 각각의 금액 계산 후 각 금액을 전체 합계 금액에 누정
-		for(CartBean cartBean : cartList) {
-			money = cartBean.getPrice() * cartBean.getQty();
-			totalMoney += money;
+		if(cartList != null) {
+			// 장바구니 항목 각각의 금액 계산 후 각 금액을 전체 합계 금액에 누정
+			for(CartBean cartBean : cartList) {
+				money = cartBean.getPrice() * cartBean.getQty();
+				totalMoney += money;
+			}
 		}
 		
 		// request 객체에 cartList 와 총 합계 금액을 저장
